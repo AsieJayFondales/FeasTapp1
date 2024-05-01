@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 19
+names: ['bagoong', 'bay leaves', 'black pepper', 'calamansi', 'chicken', 'chili', 'coconut milk', 'fish sauce', 'flour', 'garlic', 'ginger', 'milk', 'onion', 'pork', 'salt', 'soy sauce', 'sugar', 'tomato', 'vinegar']
+
+roboflow:
+  workspace: feastapp
+  project: feastapp
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/feastapp/feastapp/dataset/1
