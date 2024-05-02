@@ -1,0 +1,78 @@
+#leftpage {
+  position: fixed;
+  width: 60%;
+  left: 0;
+  height: 100%;
+  background-image: url('/img/bg.jpg');
+  background-size: cover;
+  z-index: 1010101010
+}
+#rightpage {
+  position: fixed;
+  width: 40%;
+  left: 60%;
+  height: 100%;
+  background-color: black;
+  z-index: 1010101010;
+  align-content: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.form-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.account-form .input-group {
+  margin-bottom: 15px;
+}
+
+.account-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* This makes sure padding doesn't affect the overall width */
+}
+
+.account-form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.account-form button:hover {
+  background-color: #0056b3;
+}
+
+.signin-link, .terms {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.signin-link a, .terms a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signin-link a:hover, .terms a:hover {
+  text-decoration: underline;
+}

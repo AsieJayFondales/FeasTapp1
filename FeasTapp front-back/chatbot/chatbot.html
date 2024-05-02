@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Our Bot</title>
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">Foodie's Paradise</div>
+        <li><a href="/main/main.html">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="/scan/scan.html">Scan</a></li>
+            <li><a href="/chatbot/chatbot.html">Chatbot</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <i class="fas fa-bars"></i> <!-- FontAwesome icon for menu -->
+                </button>
+                <div class="dropdown-content">
+                    <a href="#profile">User Profile</a>
+                    <a href="#settings">Settings</a>
+                    <a href="#logout">Logout</a>
+                </div>
+            </div>
+        </ul>
+
+        
+    </nav>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Chatbot Assistance</h1>
+        </header>
+        <ul id="chatbox" class="chat-box">
+            <!-- Chat messages will be dynamically added here -->
+        </ul>
+        <form id="chat-form" class="chat-form">
+            <input type="text" id="user-input" placeholder="Type a message..." autocomplete="off" required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    
+    <script src="chatbot.js"></script>
+</body>
+</html>
