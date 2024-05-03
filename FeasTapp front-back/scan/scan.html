@@ -36,10 +36,8 @@
             <p>All your photos will automatically be saved to the database.</p>
             <button id="camera-btn">Access Camera</button>
             <button id="upload-btn">Upload Photos</button>
-            <input type="file" id="photo-upload" accept="image/*" hidden>
-            
+            <input type="file" id="uploadInput" accept="image/*" hidden>
 
-            <input id="uploadInput" type="file"/> 
            <canvas id="canvas" width="640" height="480"></canvas> 
             <div id="ingredientList"></div> <!-- Closed the div tag -->
             
@@ -51,6 +49,103 @@
             </div> 
         </div>
     </div>
-    <script src="scan.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('video');
+        var cameraButton = document.getElementById('camera-btn');
+        var closeCameraButton = document.getElementById('close-camera-btn');
+        var videoContainer = document.querySelector('.video-container');
+        var uploadInput = document.getElementById('uploadInput');
+        var canvas = document.getElementById('canvas');
+    
+        cameraButton.addEventListener('click', function() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                    video.removeAttribute('hidden');
+                    videoContainer.style.display = 'block';
+                    closeCameraButton.style.display = 'block';
+                })
+                .catch(function(error) {
+                    console.error("Error accessing the camera: ", error);
+                    alert('Unable to access camera: ' + error.message);
+                });
+        });
+    
+        uploadInput.addEventListener("change", async (event) => {
+            // Your upload input logic here...
+        });
+    
+        closeCameraButton.addEventListener('click', function() {
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+            video.setAttribute('hidden', true);
+            videoContainer.style.display = 'none';
+            closeCameraButton.style.display = 'none';
+        });
+    
+        const captureAndDetectButton = document.getElementById("captureAndDetectButton");
+        captureAndDetectButton.addEventListener("click", () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(async function(blob) {
+                const formData = new FormData();
+                formData.append('image_file', blob, 'snapshot.jpg');
+    
+                const response = await fetch('/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                const boxes = await response.json();
+                draw_image_and_boxes(blob, boxes);
+                list_detected_ingredients(boxes);
+            }, 'image/jpeg');
+        });
+    
+        const uploadButton = document.getElementById("upload-btn");
+        uploadButton.addEventListener("click", () => {
+            const input = document.getElementById("uploadInput");
+            input.click();
+        });
+    
+        // Function to draw an image and bounding boxes on a canvas based on the provided file and boxes array.
+        function draw_image_and_boxes(file, boxes) {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                ctx.strokeStyle = "#00FF00";
+                ctx.lineWidth = 3;
+                ctx.font = "18px serif";
+                boxes.forEach(([x1, y1, x2, y2, label]) => {
+                    ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+                    ctx.fillStyle = "#00ff00";
+                    const width = ctx.measureText(label).width;
+                    ctx.fillRect(x1, y1, width + 10, 25);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(label, x1, y1 + 18);
+                });
+            };
+        }
+    
+        function list_detected_ingredients(boxes) {
+            const ingredientList = document.getElementById("ingredientList");
+            ingredientList.innerHTML = "";
+            const uniqueIngredients = new Set();
+            boxes.forEach(([x1, y1, x2, y2, label]) => {
+                uniqueIngredients.add(label);
+            });
+            uniqueIngredients.forEach(ingredient => {
+                const ingredientListItem = document.createElement("p");
+                ingredientListItem.textContent = ingredient;
+                ingredientList.appendChild(ingredientListItem);
+            });
+        }
+    });
+    
+    </script>
+    
 </body>
 </html>
