@@ -1,5 +1,5 @@
 from ultralytics import YOLO
-from flask import request, Response, Flask
+from flask import render_template, request, Response, Flask, send_from_directory, url_for
 from waitress import serve
 from PIL import Image
 import json
@@ -10,7 +10,8 @@ cred = credentials.Certificate("feastapp-c4d79-firebase-adminsdk-wygrr-5dee5a902
 firebase_admin.initialize_app(cred)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+
 
 # Sample dish recommendation function
 def recommend_dish(ingredient):
@@ -29,8 +30,22 @@ def recommend_dish(ingredient):
 
 @app.route("/")
 def root():
-    with open("scan.html") as file:
-        return file.read()
+    return render_template("scan.html")
+
+@app.route("/chatbot")
+def chatbot():
+    # Serves the chatbot.html from the chatbot folder inside templates directory.
+    return render_template("chatbot/chatbot.html")
+
+@app.route("/main")
+def main():
+    # Serves the main.html from the main folder inside templates directory.
+    return render_template("main/main.html")
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
+
 
 @app.route("/detect", methods=["POST"])
 def detect():
@@ -58,3 +73,6 @@ def detect_objects_on_image(buf):
             x1, y1, x2, y2, ingredient, prob, dish
         ])
     return output
+
+if __name__ == "__main__":
+    app.run(debug=True)

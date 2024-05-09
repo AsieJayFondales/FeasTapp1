@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan Ingredients</title>
-    <link rel="stylesheet" href="scan.css">
+    <!--<link rel="stylesheet" href="scan.css">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('serve_static', path='css/scan.css') }}">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <nav>
         <div class="nav-brand">FeasTapp</div>
         <ul class="nav-links">
-            <li><a href="/main/main.html">Home</a></li>
+            <li><a href="/scan/templates/main/main.html">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="/scan/scan.html">Scan</a></li>
-            <li><a href="/chatbot/chatbot.html">Chatbot</a></li>
+            <li><a href="/scan/templates/scan.html">Scan</a></li>
+            <li><a href="/scan/templates/chatbot/chatbot.html">Chatbot</a></li>
             <div class="dropdown">
                 <button class="dropbtn">
                     <i class="fas fa-bars"></i> <!-- FontAwesome icon for menu -->
