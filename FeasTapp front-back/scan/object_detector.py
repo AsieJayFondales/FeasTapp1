@@ -58,4 +58,3 @@ def detect_objects_on_image(buf):
             x1, y1, x2, y2, ingredient, prob, dish
         ])
     return output
-

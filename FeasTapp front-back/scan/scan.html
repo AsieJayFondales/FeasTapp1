@@ -105,9 +105,24 @@
     
         const uploadButton = document.getElementById("upload-btn");
         uploadButton.addEventListener("click", () => {
-            const input = document.getElementById("uploadInput");
-            input.click();
-        });
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*'; // Allow only image files
+            input.onchange = async function(event) {
+                const file = event.target.files[0];
+                const formData = new FormData();
+                formData.append('image_file', file, file.name);
+
+                const response = await fetch('/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                const boxes = await response.json();
+                draw_image_and_boxes(file, boxes);
+                list_detected_ingredients(boxes);
+            };
+    input.click(); // Simulate a click on the hidden file input element
+});
     
         // Function to draw an image and bounding boxes on a canvas based on the provided file and boxes array.
         function draw_image_and_boxes(file, boxes) {
