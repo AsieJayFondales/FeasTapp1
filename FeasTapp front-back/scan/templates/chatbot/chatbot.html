@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with Our Bot</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('serve_static', path='css/chatbot.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chatbot.css') }}">
 </head>
 <body>
 
     <nav>
-        <div class="nav-brand">Foodie's Paradise</div>
+        <div class="nav-brand">FeasTapp Bot</div>
         <li><a href="/scan/templates/main/main.html">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="/scan/templates/scan.html">Scan</a></li>
-            <li><a href="/scan/templates/chatbot/chatbot.html">Chatbot</a></li>
+            <li><a href="http://127.0.0.1:5001">Scan</a></li>
+            <li><a href="http://127.0.0.1:5000">Chatbot</a></li>
             <div class="dropdown">
                 <button class="dropbtn">
                     <i class="fas fa-bars"></i> <!-- FontAwesome icon for menu -->

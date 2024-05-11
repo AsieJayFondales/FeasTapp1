@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open main.html",
-            "file": "c:\\Users\\acer\\Downloads\\FeasTapp\\main\\main.html"
+            "file": "c:\\Users\\acer\\Downloads\\FeasTapp1\\FeasTapp front-back\\main\\main.html"
         }
     ]
 }
