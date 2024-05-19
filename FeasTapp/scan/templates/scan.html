@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Ingredients</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('serve_static', path='css/scan.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+    
+</head>
+<body>
+    <nav>
+        <div class="nav-brand">FeasTapp</div>
+        <ul class="nav-links">
+            <li><a href="/scan/templates/main/main.html">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="http://127.0.0.1:5001">Scan</a></li>
+            <li><a href="http://127.0.0.1:5000">Chatbot</a></li>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <i class="fas fa-bars"></i> <!-- FontAwesome icon for menu -->
+                </button>
+                <div class="dropdown-content">
+                    <a href="#profile">User Profile</a>
+                    <a href="#settings">Settings</a>
+                    <a href="#logout">Logout</a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+    <div class="scan-container">
+        <div class="scan-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/2722/2722110.png" alt="Scan Icon" class="scan-icon">
+            <h1>SCAN INGREDIENTS</h1>
+            <p>All your photos will automatically be saved to the database.</p>
+            <button id="camera-btn">Access Camera</button>
+            <button id="upload-btn">Upload Photos</button>
+            <input type="file" id="uploadInput" accept="image/*" hidden>
+            
+            <p id="scan-status" style="display: none;">Processing the photo...</p>
+            <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+            <div id="ingredientList" style="display: none; text-align: left;">
+                <h2>Here's What We Found in Your Scan</h2>
+                <h3>Main Ingredient/s</h3>
+                <ul id="main-ingredients"></ul>
+                <h3>Condiment/s</h3>
+                <ul id="condiments"></ul>
+            </div>
+            
+            <!-- Container for video and close button -->
+            <div class="video-container" hidden>
+                <button id="close-camera-btn">&times;</button> <!-- Styling as 'X' -->
+                <video id="video" width="640" height="480" autoplay hidden></video>
+                <button id="captureAndDetectButton">Take Snapshot</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('video');
+        var cameraButton = document.getElementById('camera-btn');
+        var closeCameraButton = document.getElementById('close-camera-btn');
+        var videoContainer = document.querySelector('.video-container');
+        var uploadInput = document.getElementById('uploadInput');
+        var canvas = document.getElementById('canvas');
+        var scanStatus = document.getElementById('scan-status');
+        var ingredientList = document.getElementById('ingredientList');
+        var mainIngredientsList = document.getElementById('main-ingredients');
+        var condimentsList = document.getElementById('condiments');
+    
+        cameraButton.addEventListener('click', function() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                    video.removeAttribute('hidden');
+                    videoContainer.style.display = 'block';
+                    closeCameraButton.style.display = 'block';
+                })
+                .catch(function(error) {
+                    console.error("Error accessing the camera: ", error);
+                    alert('Unable to access camera: ' + error.message);
+                });
+        });
+    
+        uploadInput.addEventListener("change", async (event) => {
+            const file = event.target.files[0];
+            const formData = new FormData();
+            formData.append('image_file', file, file.name);
+
+            scanStatus.style.display = 'block';
+            ingredientList.style.display = 'none';
+            scanStatus.textContent = 'Processing the photo...';
+
+            const response = await fetch('/detect', {
+                method: 'POST',
+                body: formData
+            });
+            const boxes = await response.json();
+
+            scanStatus.textContent = 'Scan complete!';
+
+            draw_image_and_boxes(file, boxes);
+            list_detected_ingredients(boxes);
+        });
+    
+        closeCameraButton.addEventListener('click', function() {
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+            video.setAttribute('hidden', true);
+            videoContainer.style.display = 'none';
+            closeCameraButton.style.display = 'none';
+        });
+    
+        const captureAndDetectButton = document.getElementById("captureAndDetectButton");
+        captureAndDetectButton.addEventListener("click", () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(async function(blob) {
+                const formData = new FormData();
+                formData.append('image_file', blob, 'snapshot.jpg');
+    
+                scanStatus.style.display = 'block';
+                ingredientList.style.display = 'none';
+                scanStatus.textContent = 'Processing the photo...';
+
+                const response = await fetch('/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                const boxes = await response.json();
+
+                scanStatus.textContent = 'Scan complete!';
+
+                draw_image_and_boxes(blob, boxes);
+                list_detected_ingredients(boxes);
+            }, 'image/jpeg');
+        });
+    
+        const uploadButton = document.getElementById("upload-btn");
+        uploadButton.addEventListener("click", () => {
+            uploadInput.click();
+        });
+    
+        function draw_image_and_boxes(file, boxes) {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                const ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                const x = (canvas.width / 2) - (img.width / 2) * scale;
+                const y = (canvas.height / 2) - (img.height / 2) * scale;
+
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                ctx.strokeStyle = "#00FF00";
+                ctx.lineWidth = 3;
+                ctx.font = "18px serif";
+
+                boxes.forEach(([x1, y1, x2, y2, label]) => {
+                    const rectX = x1 * scale + x;
+                    const rectY = y1 * scale + y;
+                    const rectWidth = (x2 - x1) * scale;
+                    const rectHeight = (y2 - y1) * scale;
+                    ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+                    ctx.fillStyle = "#00ff00";
+                    const width = ctx.measureText(label).width;
+                    ctx.fillRect(rectX, rectY, width + 10, 25);
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(label, rectX, rectY + 18);
+                });
+
+                canvas.style.display = 'block';
+            };
+        }
+    
+        async function sendIngredientsToChatbot(ingredients) {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/receive_ingredients', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ingredients)
+                });
+                if (response.ok) {
+                    console.log("Ingredients sent to chatbot successfully.");
+                } else {
+                    console.error("Failed to send ingredients to chatbot.");
+                }
+            } catch (error) {
+                console.error("Error sending ingredients to chatbot:", error);
+            }
+        }
+
+        function list_detected_ingredients(boxes) {
+            mainIngredientsList.innerHTML = "";
+            condimentsList.innerHTML = "";
+
+            const mainIngredients = new Set();
+            const condiments = new Set();
+
+            boxes.forEach(([x1, y1, x2, y2, label, prob, category]) => {
+                if (category === 'Main Ingredient') {
+                    mainIngredients.add(label);
+                } else if (category === 'Condiment') {
+                    condiments.add(label);
+                }
+            });
+
+            mainIngredients.forEach(ingredient => {
+                const listItem = document.createElement("li");
+                listItem.textContent = ingredient;
+                mainIngredientsList.appendChild(listItem);
+            });
+
+            condiments.forEach(ingredient => {
+                const listItem = document.createElement("li");
+                listItem.textContent = ingredient;
+                condimentsList.appendChild(listItem);
+            });
+
+            scanStatus.style.display = 'none';
+            ingredientList.style.display = 'block';
+
+            const ingredients = {
+                'Main Ingredients': Array.from(mainIngredients),
+                'Condiments': Array.from(condiments)
+            };
+
+            sendIngredientsToChatbot(ingredients);
+        }
+    });
+    </script>
+</body>
+</html>
