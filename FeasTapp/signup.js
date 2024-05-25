@@ -25,32 +25,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Get the auth module from the Firebase app
 
-// Listen for the form submission
-document.querySelector('.account-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    // Get DOM elements
+    const signUpForm = document.querySelector('#sign-up-form');
 
-    // Get user info from the form fields
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+    signUpForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
-        alert('Passwords do not match.');
-        return;
-    }
+        // Get user info from the form fields
+        const fname = document.getElementById('first-name').value;
+        const lname = document.getElementById('last-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-    // Create a new user with email and password
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log('User created:', user);
-            window.location.href = 'userpref/userpref.html'; // Redirect to the preferences page
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage); // Show errors on the UI
-        });
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        // Create a new user with email and password
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log('User created:', user);
+                window.location.href = 'userpref/userpref.html'; // Redirect to the preferences page
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                alert(errorMessage); // Show errors on the UI
+            });
+    });
 });

@@ -22,14 +22,14 @@ const auth = getAuth(app);
 
 document.addEventListener('DOMContentLoaded', () => {
     // Get DOM elements
-    const signInForm = document.querySelector('.account-form');
+    const signInForm = document.querySelector('#login-form');
 
     signInForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
         // Get user info from the form fields
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const email = document.getElementById('signin-email').value;
+        const password = document.getElementById('signin-password').value;
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/main/main.html';
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 // Handle errors here
                 alert('Failed to sign in: ' + errorMessage);

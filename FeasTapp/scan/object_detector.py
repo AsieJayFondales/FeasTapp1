@@ -35,14 +35,14 @@ app = Flask(__name__, static_folder='static')
 # Sample dish recommendation function
 def classify_ingredient(ingredient):
     main_ingredients = [
-    'chicken', 'fish', 'egg', 'pork', 'tomato', 'garlic', 'ginger', 'onion', 
-    'lemon', 'calamansi', 'coconut milk', 'flour', 'chili', 'milk'
+        'chicken', 'fish', 'egg', 'pork', 'tomato', 'garlic', 'ginger', 'onion',
+        'lemon', 'calamansi', 'coconut milk', 'flour', 'chili', 'milk'
     ]
 
     condiments = [
-        'bagoong', 'bay leaves', 'black pepper', 'fish sauce', 'salt', 'soy sauce', 
+        'bagoong', 'bay leaves', 'black pepper', 'fish sauce', 'salt', 'soy sauce',
         'sugar', 'vinegar'
-    ]   
+    ]
 
     if ingredient in main_ingredients:
         return 'Main Ingredient'

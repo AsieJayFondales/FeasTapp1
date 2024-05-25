@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan Ingredients</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('serve_static', path='css/scan.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
-    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/scan.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <nav>
         <div class="nav-brand">FeasTapp</div>
         <ul class="nav-links">
-            <li><a href="/scan/templates/main/main.html">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="{{ url_for('main') }}">Home</a></li>
             <li><a href="http://127.0.0.1:5001">Scan</a></li>
             <li><a href="http://127.0.0.1:5000">Chatbot</a></li>
             <div class="dropdown">
                 <button class="dropbtn">
-                    <i class="fas fa-bars"></i> <!-- FontAwesome icon for menu -->
+                    <i class="fas fa-bars"></i>
                 </button>
                 <div class="dropdown-content">
                     <a href="#profile">User Profile</a>
@@ -187,6 +185,10 @@
                 });
                 if (response.ok) {
                     console.log("Ingredients sent to chatbot successfully.");
+                    const userInput = ingredients['Main Ingredients'].concat(ingredients['Condiments']).join(', ');
+                    console.log("Redirecting with ingredients:", userInput);
+                    // Automatically paste the detected ingredients into the chatbot input
+                    window.location.href = "http://127.0.0.1:5000/?ingredients=" + encodeURIComponent(userInput);
                 } else {
                     console.error("Failed to send ingredients to chatbot.");
                 }

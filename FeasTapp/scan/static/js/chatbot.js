@@ -1,5 +1,4 @@
-import { db } from './firebase-config.js';
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('get-started-btn').addEventListener('click', function() {
@@ -8,14 +7,18 @@ document.addEventListener('DOMContentLoaded', function() {
         displayButtons(["Filipino", "Chinese", "Korean", "Japanese", "Thai", "Indian", "French", "Brazilian", "Mexican"]);
         chatBox.scrollTop = chatBox.scrollHeight;
         this.style.display = 'none';  // Hide the Get Started button
+        document.getElementById('message-box').style.display = 'block';  // Show the message box
+    });
+
+    document.getElementById('user-input').addEventListener('keypress', function(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
     });
 
     document.getElementById('send-btn').addEventListener('click', function() {
         sendMessage();
-    });
-
-    document.getElementById('find-recipe-btn').addEventListener('click', function() {
-        findRecipe();
     });
 
     document.getElementById('button-options').addEventListener('click', function(event) {
@@ -25,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 saveRecipe();
             } else {
                 sendButtonMessage(message);
+                if (message !== 'Recommend another set of dishes') {
+                    document.getElementById('message-box').style.display = 'block';  // Show the message box after selecting a cuisine
+                }
             }
         }
     });
@@ -36,21 +42,18 @@ function displayButtons(buttons) {
     buttons.forEach(function(buttonText) {
         var button = document.createElement('button');
         button.textContent = buttonText;
+        button.classList.add('button-option'); // Add class for styling
         buttonOptions.appendChild(button);
     });
-    buttonOptions.style.display = 'block';
+    buttonOptions.style.display = 'grid'; // Use grid layout
+    buttonOptions.style.gridTemplateColumns = 'repeat(3, 1fr)'; // 3 columns
+    buttonOptions.style.gap = '10px'; // Gap between buttons
 }
 
 function sendMessage() {
     var input = document.getElementById('user-input');
     var message = input.value.trim();
     sendMessageToServer(message);
-}
-
-function findRecipe() {
-    var input = document.getElementById('user-input');
-    var ingredients = input.value.trim();
-    sendMessageToServer(`Find a recipe with these ingredients: ${ingredients}`);
 }
 
 function sendButtonMessage(message) {
@@ -68,7 +71,7 @@ function sendMessageToServer(message) {
             contentType: 'application/json',
             data: JSON.stringify({ message: message }),
             success: function(data) {
-                console.log("Server Response: ", data);  // Log server response for debugging
+                console.log("Server Response: ", data);
                 chatBox.innerHTML += '<div class="message user-message">' + message + '</div>';
                 chatBox.innerHTML += '<div class="message bot-response">' + data.response + '</div>';
                 chatBox.scrollTop = chatBox.scrollHeight;
@@ -80,10 +83,9 @@ function sendMessageToServer(message) {
                     buttonOptions.style.display = 'none';
                 }
 
-                // Store the recipe name in a data attribute
                 const recipeName = extractRecipeName(data.response);
                 chatBox.setAttribute('data-recipe-name', recipeName || '');
-                console.log("Recipe Name: ", recipeName);  // Log the recipe name for debugging
+                console.log("Recipe Name: ", recipeName);
             },
             error: function(xhr, status, error) {
                 console.error("Error when sending/receiving message: ", error);
@@ -101,7 +103,7 @@ function extractRecipeName(text) {
 async function saveRecipe() {
     const chatBox = document.getElementById('chat-box');
     const recipeName = chatBox.getAttribute('data-recipe-name');
-    console.log("Saving Recipe: ", recipeName);  // Log the recipe name being saved
+    console.log("Saving Recipe: ", recipeName);
 
     if (recipeName === "Unknown Recipe" || !recipeName) {
         chatBox.innerHTML += '<div class="message bot-response">Failed to save recipe. No recipe name found.</div>';
