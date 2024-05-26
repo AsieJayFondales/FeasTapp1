@@ -39,10 +39,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        import { db } from './firebase-config.js';
-        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+
         document.addEventListener('DOMContentLoaded', function() {
-            
             document.getElementById('get-started-btn').addEventListener('click', function() {
                 var chatBox = document.getElementById('chat-box');
                 chatBox.innerHTML += '<div class="message bot-response">Which cuisine do you prefer?</div>';
