@@ -1,5 +1,5 @@
 // static/chatbot.js
-import { db } from './firebase-config.js';
+import { db } from './firebase-config-app1.js';
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -116,5 +116,28 @@ async function saveRecipe() {
         chatBox.innerHTML += '<div class="message bot-response">Failed to save recipe. Please try again.</div>';
     }
 }
+
+function sendIngredientsToChatbot(ingredients) {
+    fetch('http://127.0.0.1:5000/receive_ingredients', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ingredients: ingredients})
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Ingredients sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error sending ingredients to chatbot:', error);
+    });
+}
+
 
 export { saveRecipe };

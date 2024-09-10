@@ -1,4 +1,5 @@
-
+import { db } from './firebase-config-app1.js';
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('get-started-btn').addEventListener('click', function() {
@@ -53,7 +54,9 @@ function displayButtons(buttons) {
 function sendMessage() {
     var input = document.getElementById('user-input');
     var message = input.value.trim();
-    sendMessageToServer(message);
+    if (message) {
+        sendMessageToServer(message);
+    }
 }
 
 function sendButtonMessage(message) {

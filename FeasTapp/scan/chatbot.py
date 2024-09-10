@@ -1,15 +1,11 @@
 import os
 import json
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify
 import google.generativeai as genai
 import nltk
-from nltk.tokenize import word_tokenize  # Tokenization
-from nltk.tag import pos_tag  # POS tagging
-import re  # Regular Expressions
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = os.urandom(24)  # Generate a random secret key
 
 # Configure Generative AI
 API_KEY = 'AIzaSyAb4CKQ23uIo9PH-FwkGmoB3yHoJHaYuOI'
@@ -17,16 +13,24 @@ genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
 
-nltk.download('punkt')  # Download tokenizer data
-nltk.download('averaged_perceptron_tagger')  # Download POS tagger data
+nltk.download('punkt')
+nltk.download('stopwords')
 
-# Store session states in a dictionary (for simplicity, in production consider using a more robust solution)
+# Store session states in a dictionary
 sessions = {}
 
 @app.route('/')
 def root():
-    ingredients = session.get('ingredients', {})
-    return render_template('chatbot/chatbot.html', ingredients=ingredients)
+    return render_template('/chatbot.html')
+
+@app.route('/chatbot')
+def chatbot():
+    return render_template('chatbot.html')
+
+# Route to render the main page
+@app.route("/main")
+def main():
+    return render_template("/main.html")
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -61,14 +65,13 @@ def send_message():
             cuisine = sessions[session_id]['cuisine']
             ingredients = user_message.split(',')
 
-            # POS Tagging and Ingredient Validation
-            valid_ingredients = verify_ingredients_with_pos_tagging(cuisine, ingredients)
+            valid_ingredients = verify_ingredients_with_gemini(cuisine, ingredients)
             if not valid_ingredients:
                 response_text = "The ingredients provided are not suitable for the selected cuisine. Please provide valid ingredients."
             else:
                 sessions[session_id]['ingredients'] = valid_ingredients
                 response = chat.send_message(f"Recommend top 5 {cuisine} dishes using {', '.join(valid_ingredients)}.")
-                dish_recommendations = filter_dish_lines_with_regex(response.text)
+                dish_recommendations = [dish.strip() for dish in response.text.split('\n') if dish.strip() and dish.strip()[0].isdigit()]
                 if dish_recommendations:
                     response_text = "Here are the top 5 dishes I recommend:<br><br>"
                     response_text += "<ul>"
@@ -86,7 +89,7 @@ def send_message():
                 cuisine = sessions[session_id]['cuisine']
                 ingredients = sessions[session_id]['ingredients']
                 response = chat.send_message(f"Recommend another 5 {cuisine} dishes using {', '.join(ingredients)}.")
-                dish_recommendations = filter_dish_lines_with_regex(response.text)
+                dish_recommendations = [dish.strip() for dish in response.text.split('\n') if dish.strip() and dish.strip()[0].isdigit()]
                 if dish_recommendations:
                     response_text = "Here are another 5 dishes I recommend:<br><br>"
                     response_text += "<ul>"
@@ -103,59 +106,26 @@ def send_message():
                 dish_name = user_message
                 response = chat.send_message(f"Give details for the {sessions[session_id]['cuisine']} dish named {dish_name}. Include nutritional information, common allergens, and possible substitutions.")
                 response_text = format_dish_details(response.text)
-                buttons = ["Ask for Recommendation"]
+                buttons = ["Save Recipe", "Ask for Recommendation"]
                 sessions[session_id]['state'] = 'ask_cuisine'
                 show_buttons = True
-
-        # Remove asterisks from the response text
-        response_text = response_text.replace('*', '')
 
         return jsonify({'response': response_text, 'show_buttons': True if buttons else False, 'buttons': buttons, 'recipe_name': dish_name})
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({'response': "Sorry, I encountered an error. Please try again.", 'show_buttons': False})
 
-@app.route('/receive_ingredients', methods=['POST'])
-def receive_ingredients():
-    try:
-        data = request.json
-        print("Received ingredients:", data)
-        # Store the ingredients in the session
-        session['ingredients'] = data
-        return jsonify({'status': 'success'})
-    except Exception as e:
-        print(f"Error receiving ingredients: {e}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
-def verify_ingredients_with_pos_tagging(cuisine, ingredients):
-    """
-    Ingredient Validation using POS Tagging
-    - Tokenization: Splitting the ingredient input into individual words.
-    - POS Tagging: Identifying parts of speech to ensure ingredients are nouns.
-    """
-    ingredients = [ingredient.strip() for ingredient in ingredients]
-    valid_ingredients = []
-    for ingredient in ingredients:
-        words = word_tokenize(ingredient)  # Tokenization: Convert text into individual words.
-        pos_tags = pos_tag(words)  # POS Tagging: Label each word with its part of speech.
-        if any(tag.startswith('NN') for word, tag in pos_tags):  # Ensure the word is a noun (NN).
-            valid_ingredients.append(ingredient)
+def verify_ingredients_with_gemini(cuisine, ingredients):
+    response = chat.send_message(f"Verify if these ingredients are suitable for {cuisine} cuisine: {', '.join(ingredients)}.")
+    valid_ingredients = [word.strip() for word in ingredients if word.strip().lower() in response.text.lower()]
     return valid_ingredients
 
-def filter_dish_lines_with_regex(text):
-    """
-    Filtering with Regular Expressions (Regex)
-    - Using regex to filter dish recommendations that start with a digit followed by a period.
-    """
+def filter_dish_lines(text):
     lines = text.split('\n')
-    filtered_lines = [line.strip() for line in lines if re.match(r'^\d+\.\s', line.strip())]
+    filtered_lines = [line.strip() for line in lines if line.strip().startswith(tuple(str(i) + '.' for i in range(1, 10)))]
     return filtered_lines
 
 def format_dish_details(text):
-    """
-    Text Preprocessing
-    - Formatting dish details for better display.
-    """
     sections = text.split("\n\n")
     formatted_text = ""
     for section in sections:
@@ -167,12 +137,20 @@ def format_dish_details(text):
             formatted_text += f"<strong>{section.split(':')[0]}:</strong><br>{section.split(':')[1].strip().replace('\n', '<br>')}"
         elif section.startswith("Common Allergens"):
             formatted_text += f"<strong>{section.split(':')[0]}:</strong><br>{section.split(':')[1].strip().replace('\n', '<br>')}"
-        elif section.startswith("Possible Substitutions"):  
+        elif section.startswith("Possible Substitutions"):
             formatted_text += f"<strong>{section.split(':')[0]}:</strong><br>{section.split(':')[1].strip().replace('\n', '<br>')}"
         else:
             formatted_text += section.strip().replace('\n', '<br>')
         formatted_text += "<br><br>"
     return formatted_text
+
+def get_recipe_recommendations(ingredients):
+    # This is a placeholder function. Implement your logic here.
+    # For example, you might query your generative model with the ingredients.
+    response = chat.send_message(f"Recommend dishes using: {', '.join(ingredients)}")
+    dishes = response.text.split('\n')  # Split the response into a list of dishes
+    return [dish for dish in dishes if dish.strip()]  # Return non-empty dish names
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True, use_reloader=False)

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeasTapp - User Preferences</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/userpref.css') }}">
+</head>
+<body>
+    <div class="preferences-wrapper">
+        <h1>Do you follow any of the following diets?</h1>
+        <h2>Any ingredients allergies or intolerances?</h2>
+        <div class="options allergies">
+            <button>Gluten</button>
+            <button>Dairy</button>
+            <button>Peanut</button>
+            <button>Egg</button>
+            <button>Seafood</button>
+            <button>Others</button>
+        </div>
+        <h2>Any dietary preferences?</h2>
+        <div class="options dietary">
+            <button>Vegetarian</button>
+            <button>Vegan</button>
+            <button>Gluten-Free</button>
+            <button>Dairy Free</button>
+            <button>Peanut-Free</button>
+            <button>Others</button>
+        </div>
+        <button class="continue">CONTINUE</button>
+    </div> 
+    <script type="module" src="{{ url_for('static', filename='js/userpref.js') }}"></script>
+</body>
+</html>

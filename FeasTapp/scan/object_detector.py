@@ -35,14 +35,14 @@ app = Flask(__name__, static_folder='static')
 # Sample dish recommendation function
 def classify_ingredient(ingredient):
     main_ingredients = [
-        'chicken', 'fish', 'egg', 'pork', 'tomato', 'garlic', 'ginger', 'onion',
-        'lemon', 'calamansi', 'coconut milk', 'flour', 'chili', 'milk'
+    'chicken', 'fish', 'egg', 'pork', 'tomato', 'garlic', 'ginger', 'onion', 
+    'lemon', 'calamansi', 'coconut milk', 'flour', 'chili', 'milk'
     ]
 
     condiments = [
-        'bagoong', 'bay leaves', 'black pepper', 'fish sauce', 'salt', 'soy sauce',
+        'bagoong', 'bay leaves', 'black pepper', 'fish sauce', 'salt', 'soy sauce', 
         'sugar', 'vinegar'
-    ]
+    ]   
 
     if ingredient in main_ingredients:
         return 'Main Ingredient'
@@ -59,12 +59,12 @@ def root():
 # Route to render the chatbot page
 @app.route("/chatbot")
 def chatbot():
-    return render_template("chatbot/chatbot.html")
+    return render_template("/chatbot.html")
 
 # Route to render the main page
 @app.route("/main")
 def main():
-    return render_template("main/main.html")
+    return render_template("/main.html")
 
 # Static file serving
 @app.route('/static/<path:path>')

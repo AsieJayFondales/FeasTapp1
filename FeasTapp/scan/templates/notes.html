@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeasTapp - Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notes.css') }}">
+</head>
+<body>
+    <section class="notes-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="user-profile">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/d0aa20c81a794b237471f4a82fb5af120581be2981c5ef53da346e637ace1b55?apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32&&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" class="profile-image" alt="User profile picture" />
+                    <div class="welcome-text">
+                        <span>Welcome,</span>
+                        <br />
+                        <span class="user-name"> Samuel Joe</span>
+                    </div>
+                </div>
+                <nav class="nav-menu">
+                    <a href="{{ url_for('main') }}" class="nav-item">Home</a>
+                    <a href="{{ url_for('chatbot') }} " class="nav-item">Chatbot</a>
+                    <a href="{{ url_for('notes') }}" class="nav-item">Notes</a>
+                        <div class="nav-item-active-indicator"></div>
+                    </div>
+                </nav>
+                <img id="settings-icon" src="{{ url_for('static', filename='img/setting.png') }}" alt="Settings Icon" class="settings-icon">
+            </div>
+        </header>
+        <main class="main-content">
+            <form class="search-container">
+                <div class="search-input-wrapper">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/aed85459fc7f124d32da3fb4485de67e5f51971d042a5be5bc9b349b079cb161?apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32&&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" class="search-icon" alt="Search icon" />
+                    <label for="search-notes" class="visually-hidden"></label>
+                    <input type="text" id="search-notes" class="search-placeholder" placeholder="Search your notes" />
+                </div>
+            </form>
+            <h2 class="notes-title">Notes</h2>
+            <div id="notes-list"></div>
+            <div id="empty-message" class="empty-message" style="display: none;">
+                <p>Looks like you don't have notes yet, please press 
+                    <img src="{{ url_for('static', filename='img/add_circle_24dp_E8EAED_FILL0_wght300_GRAD0_opsz24')}}" alt="Add Note Icon" class="inline-icon">
+                    to add notes.
+                </p>
+                <img id="draft-image" src="{{ url_for('static', filename='img/post.png') }}" alt="No Notes Available" style="margin: 20px auto; width: 100px;">
+            </div>
+        </main>
+    </section>
+    <button class="add-note-btn" onclick="showAddNoteModal()">
+        <img src="{{ url_for('static', filename='img/add_circle_24dp_E8EAED_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Add Note Icon" class="add-note-btn">
+    </button>
+
+    <!-- Modal for adding notes -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">
+                <img src="{{ url_for('static', filename='img/cancel_24dp_E8EAED_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Close Icon" class="button-icon">
+            </button>
+            <h2>Add a New Note</h2>
+            <textarea id="noteInput" placeholder="Enter your note here..."></textarea>
+            <div class="modal-actions">
+                <button class="confirm-btn" onclick="addNote()">
+                    <img src="{{ url_for('static', filename='img/check_circle_24dp_434343_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Confirm Icon" class="button-icon">
+                </button>
+                <button class="cancel-btn" onclick="closeModal()">
+                    <img src="{{ url_for('static', filename='img/cancel_24dp_E8EAED_FILL0_wght300_GRAD0_opsz24.svg') }}" alt="Cancel Icon" class="button-icon">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAddNoteModal() {
+            document.getElementById('noteModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('noteModal').style.display = 'none';
+        }
+
+        function addNote() {
+            const noteContent = document.getElementById('noteInput').value.trim();
+            if (noteContent) {
+                const noteContainer = document.getElementById('notes-list');
+                const newNote = document.createElement('div');
+                newNote.className = 'note-item';
+                newNote.innerHTML = `
+                    <input type="checkbox" class="note-checkbox">
+                    <p contenteditable="true" class="note-content">${noteContent}</p>
+                    <button class="delete-note-btn" onclick="deleteNote(this)">
+                        <img src="delete.png" alt="Delete Icon" class="button-icon">
+                    </button>
+                    <button class="edit-note-btn" onclick="editNote(this)">
+                        <img src="edit.png" alt="Edit Icon" class="button-icon"> 
+                    </button>
+                `;
+                noteContainer.appendChild(newNote);
+                document.getElementById('noteInput').value = ''; // Clear input
+                closeModal(); // Close modal
+                checkNotes(); // Check if notes are present
+            } else {
+                alert('Please enter a note.');
+            }
+        }
+
+        function deleteNote(button) {
+            const note = button.parentElement;
+            note.remove();
+            checkNotes(); // Recheck notes after deletion
+        }
+
+        function editNote (button) {
+            const note = button.parentElement;
+            const noteContent = note.querySelector('.note-content').textContent;
+            document.getElementById('noteInput').value = noteContent;
+            showAddNoteModal();
+        }
+
+        function checkNotes() {
+            const noteContainer = document.getElementById('notes-list');
+            const draftImage = document.getElementById('draft-image');
+            const emptyMessage = document.getElementById('empty-message');
+            if (noteContainer.children.length === 0) {
+                draftImage.style.display = 'block';
+                emptyMessage.style.display = 'block';
+            } else {
+                draftImage.style.display = 'none';
+                emptyMessage.style.display = 'none';
+            }
+        }
+
+        // Initialize check on page load
+        document.addEventListener('DOMContentLoaded', checkNotes);
+    </script> 
+</body>
+</html>
+
