@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #CABA9C; /* Khaki background */
+  color: #4D2D18; /* Rich dark brown */
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main container for the layout */
+.main-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Sidebar (Settings container) */
+.settings-container {
+  background-color: #102820;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 20px;
+  height: 100vh;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+  color: #CABA9C;
+  border-radius: 0 20px 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Content area to align beside sidebar */
+.content-container {
+  margin-left: 270px; /* Space for the sidebar */
+  padding: 20px;
+  width: calc(100% - 270px); /* Adjust width to fill remaining space */
+  background-color: #F5F3EF; /* Light background */
+  transition: margin-left 0.3s ease;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-icon {
+  cursor: pointer;
+  width: 30px;
+  margin-right: auto;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+/* Settings Title */
+.settings-title {
+  color: #CABA9C;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #CABA9C;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.menu-item:hover {
+  background-color: rgba(76, 100, 68, 0.3);
+  color: #8A6240;
+}
+
+.menu-item-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.logout-section {
+  display: flex;
+  align-items: center;
+  color: #CABA9C;
+  font-size: 18px;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.logout-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+/* About page section */
+.about-header {
+  background-color: #CABA9C;
+  box-shadow: 0px 5px 14px rgba(20, 20, 43, 0.1);
+  margin-bottom: 10px;
+  color: #102820;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #FFF;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Intro Card */
+.intro-card {
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  color: #4D2D18;
+  font-weight: 500;
+  text-align: center;
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.app-logo {
+  width: 100px;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.app-description {
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+.app-name {
+  font-weight: 700;
+  color: #8A6240;
+}
+
+/* Team section */
+.team {
+  margin-top: 40px;
+  text-align: center;
+  background-color: #FFF;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.team-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4D2D18;
+  margin-bottom: 20px;
+}
+
+.team-image {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive styling */
+@media (max-width: 991px) {
+  .main-container {
+      flex-direction: column;
+  }
+
+  .settings-container {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-radius: 0;
+  }
+
+  .content-container {
+      margin-left: 0;
+      width: 100%;
+      padding: 20px;
+  }
+
+  .about-header {
+      font-size: 24px;
+      padding: 10px;
+  }
+
+  .content-wrapper {
+      padding: 10px;
+  }
+
+  .team-heading {
+      font-size: 20px;
+  }
+}

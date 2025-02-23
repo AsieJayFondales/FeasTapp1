@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="settings-container" id="sidebar">
+  <div class="header-wrapper">
+    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5092155499e7a8b6982597d49be08c8342a39616160123467cb8db6b26779ac1?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" 
+       alt="Back" class="back-icon" onclick="window.history.back();" />
+    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fcdce4e5ad54d67f795efd0c1dd26f955b7da7b59ba9a6a91e9d06bd1eef28a4?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="Profile" class="profile-icon" />
+  </div>
+  <h1 class="settings-title">Settings</h1>
+  <a href="{{ url_for('account_settings') }}" class="menu-item">Account Settings</a>
+  <a href="{{ url_for('food_preferences') }}" class="menu-item">Food Preferences</a>
+  <a href="{{ url_for('about') }}" class="menu-item">About</a>
+  <a href="{{ url_for('feedback') }}" class="menu-item active">Feedback</a>
+  <a href="{{ url_for('signout') }}" class="logout-section">
+    <span>Logout</span>
+  </a>
+</nav>
+
+<!-- Main content -->
+<div class="content-container">
+  <section class="feedback-section">
+    <header class="feedback-header">
+      <h1 class="feedback-title">Feedback</h1>
+    </header>
+    
+    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9172127281b1eabf818050ecee7189a18c4d53e62bdabc4020db99130a61547?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="Feedback Icon" class="feedback-icon" />
+    
+    <p class="feedback-message">
+      Thanks for trying FeasTapp – your AI-powered kitchen buddy for ingredient scanning and personalized recipe ideas! We want to make cooking even easier and more fun, so please share your thoughts in our quick feedback form.
+      <br /><br />
+      Your insights help us improve and add features you'll love.
+    </p>
+    
+    <button class="feedback-button" tabindex="0">Feedback Form</button>
+  </section>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
+  }
+
+  function logout() {
+    window.location.href = "{{ url_for('signout') }}";
+  }
+</script>
+
+</body>
+</html>

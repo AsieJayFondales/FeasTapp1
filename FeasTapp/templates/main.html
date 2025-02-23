@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeasTapp - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='img/green.png') }}" alt="Profile Picture" class="profile-picture">
+                <span class="profile-name">FeasTapp</span>
+            </div>
+            <div class="menu">
+                <a href="{{ url_for('main') }}" class="{% if request.endpoint == 'main' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Scan</a>
+                <a href="{{ url_for('saved_recipes') }}" class="{% if request.endpoint == 'saved_recipes' %}active{% endif %}">Saved Recipe</a>
+            </div>
+            <div class="settings-icon">
+                <i class="fa fa-cog"></i>
+                <div class="settings-menu">
+                    <ul>
+                        <li><a href="{{ url_for('account_settings') }}">Profile Settings</a></li>
+                        <li><a href="{{ url_for('food_preferences') }}">Food Preferences</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('feedback') }}">Feeback</a></li>
+                        <li><a href="{{ url_for('signin') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Slideshow Section -->
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='img/cui1.jpg') }}" alt="Dish 1">
+        </div>
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='img/cui2.jpg') }}" alt="Dish 2">
+        </div>
+        <div class="slide fade">
+            <img src="{{ url_for('static', filename='img/cui3.jpg') }}" alt="Dish 3">
+        </div>
+    </div>
+
+    <!-- Favorites Section -->
+    <div id="wefav">
+        <h1>Trending Recipes</h1>
+        <div class="favorites-container">
+            <img src="{{ url_for('static', filename='img/trend1.jpg') }}" alt="Favorite Dish 1">
+            <img src="{{ url_for('static', filename='img/trend2.jpg') }}" alt="Favorite Dish 2">
+            <img src="{{ url_for('static', filename='img/trend3.jpg') }}" alt="Favorite Dish 3">
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h2>About FeasTapp</h2>
+        <p>FeasTapp is your go-to app for recipe inspiration. Simply scan the ingredients in your kitchen, and FeasTapp will suggest delicious recipes for you. Perfect for home cooks and food enthusiasts alike, FeasTapp makes cooking easy and fun!<br><br>What are you waiting for? Get your available ingredients and scan it now!</p>
+        <a href="{{ url_for('index') }}" class="scan-ing">Scan Ingredients</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 FeasTapp. All rights reserved.</p>
+        <p>Follow us on 
+            <a href="https://www.facebook.com/profile.php?id=61554478226652">Facebook</a> | 
+            <a href="https://x.com/pickapurple">Twitter</a> | 
+            <a href="https://www.instagram.com/brndtt.prpl?fbclid=IwY2xjawErBQRleHRuA2FlbQIxMAABHS9IuyWua6k0TvGB6GjtLjRha7bcpxVw_mlKiiU4IY3B6bAXj2YaakJdBg_aem_3ERx3iBsAi-8KKzRTVMnYA">Instagram</a>
+        </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

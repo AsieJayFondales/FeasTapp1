@@ -1,0 +1,249 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #CABA9C; /* Khaki background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #102820; /* Dark Green */
+    padding: 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-name {
+    font-size: 12px;
+    color: #CABA9C;
+    font-weight: bold;
+}
+
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #CABA9C; /* Khaki text */
+    font-weight: bold;
+    font-size: 12px;
+    position: relative;
+    padding: 5px 0;
+}
+
+.menu a.active {
+    color: #8A6240; /* Raw Umber for active link */
+    font-weight: bold;
+}
+
+/* Animated underline on hover and active */
+.menu a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #8A6240; /* Raw Umber for hover underline */
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu a:hover::after,
+.menu a.active::after {
+    width: 100%;
+}
+
+.settings-icon {
+    font-size: 20px;
+    color: #CABA9C;
+    cursor: pointer;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #102820;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    width: 200px;
+}
+
+.settings-menu ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.settings-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #4C6444;
+}
+
+.settings-menu li a {
+    text-decoration: none;
+    color: #CABA9C;
+}
+
+/* Show settings menu on hover */
+.settings-icon:hover .settings-menu {
+    display: block;
+}
+
+/* Main container for centering */
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Flex container for side-by-side layout */
+.content-container {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.scan-container, .chat-container {
+    background-color: #102820;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    height: 640px; /* Match the height with the chatbot container */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.scan-box {
+    text-align: center;
+    padding: 20px;
+}
+
+.scan-box img {
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.scan-box h1, .welcome-message {
+    color: #CABA9C;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.scan-box p{
+    color: #CABA9C;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#scan-status-spinner {
+    display: none; /* Initially hidden */
+    width: 50px;
+    height: 50px;
+    margin: 10px auto;
+    background: none;
+}
+
+/* Close button in modal */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #4D2D18; /* Café Noir */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #8A6240; /* Raw Umber */
+}
+
+/* Main container for saved recipes */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #4C6444;
+    margin-bottom: 20px;
+}
+
+.recipe-list {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.recipe-item {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.recipe-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4C6444;
+}
+
+.recipe-date {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Back to Main button styling */
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4C6444;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #8A6240;
+}

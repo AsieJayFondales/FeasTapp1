@@ -1,0 +1,505 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #CABA9C; /* Khaki background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #102820; /* Dark Green */
+    padding: 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-name {
+    font-size: 12px;
+    color: #CABA9C;
+    font-weight: bold;
+}
+
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #CABA9C; /* Khaki text */
+    font-weight: bold;
+    font-size: 12px;
+    position: relative;
+    padding: 5px 0;
+}
+
+.menu a.active {
+    color: #8A6240; /* Raw Umber for active link */
+    font-weight: bold;
+}
+
+/* Animated underline on hover and active */
+.menu a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #8A6240; /* Raw Umber for hover underline */
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu a:hover::after,
+.menu a.active::after {
+    width: 100%;
+}
+
+.settings-icon {
+    font-size: 20px;
+    color: #CABA9C;
+    cursor: pointer;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #102820;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    width: 200px;
+}
+
+.settings-menu ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.settings-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #4C6444;
+}
+
+.settings-menu li a {
+    text-decoration: none;
+    color: #CABA9C;
+}
+
+/* Show settings menu on hover */
+.settings-icon:hover .settings-menu {
+    display: block;
+}
+
+/* Main container for centering */
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Flex container for side-by-side layout */
+.content-container {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.scan-container, .chat-container {
+    background-color: #102820;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    height: 640px; /* Match the height with the chatbot container */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.scan-box {
+    text-align: center;
+    padding: 20px;
+}
+
+.scan-box img {
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.scan-box h1, .welcome-message {
+    color: #CABA9C;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.scan-box p{
+    color: #CABA9C;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#scan-status-spinner {
+    display: none; /* Initially hidden */
+    width: 50px;
+    height: 50px;
+    margin: 10px auto;
+    background: none;
+}
+
+/* Close button in modal */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #4D2D18; /* Café Noir */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #8A6240; /* Raw Umber */
+}
+
+.scan-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+    margin-bottom: 20px; /* Add space below the buttons */
+}
+
+.scan-buttons button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.scan-buttons button:hover {
+    background-color: #218838;
+}
+
+.video-container {
+    position: relative;
+}
+
+.shutter-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.shutter-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.option-button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.option-button:hover {
+    background-color: #218838;
+}
+
+
+#loading-indicator img,
+#loading-indicator-chat img {
+    width: 30px; /* Smaller size */
+    height: 30px;
+    margin-top: 10px;
+}
+
+/* Modal styles matching the theme */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 40, 32, 0.9); /* Dark Green with opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #CABA9C; /* Khaki background */
+    color: #102820; /* Dark Green text */
+    padding: 20px;
+    border: 2px solid #4C6444; /* Hunter Green border */
+    border-radius: 10px;
+    width: 80%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.cuisine-option, .dish-option {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.cuisine-option:hover, .dish-option:hover {
+    background-color: #218838;
+}
+
+#close-cuisine-dish-popup-btn {
+    display: block;
+    margin: 10px auto 0 auto;
+    padding: 10px;
+    width: 100%;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#close-cuisine-dish-popup-btn:hover {
+    background-color: #c82333;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cuisine-option {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.cuisine-option:hover {
+    background-color: #218838;
+}
+
+/* Styling for selected cuisine buttons */
+.cuisine-option-selected {
+    background-color: #00cc66;  /* You can choose any color to highlight the selected cuisine */
+    color: white;
+}
+
+#close-cuisine-popup-btn {
+    display: block;
+    margin: 10px auto 0 auto;
+    padding: 10px;
+    width: 100%;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#close-cuisine-popup-btn:hover {
+    background-color: #c82333;
+}
+
+/* Ingredient Condition Popup Styling */
+#ingredient-condition-popup {
+    display: none;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+    width: 80%;
+    max-width: 400px;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 2px solid #f5c6cb;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 16px;
+    z-index: 1050;
+}
+
+#ingredient-condition-close {
+    background-color: #f5c6cb;
+    color: #721c24;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* Ingredients list styling */
+#ingredient-list h3 {
+    color: #4C6444; /* Hunter Green */
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+#main-ingredients li,
+#condiments li {
+    color: #102820; /* Dark Green text */
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Button group styling inside the modal */
+.modal .button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.modal .button-group button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4C6444; /* Hunter Green */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal .button-group button:hover {
+    background-color: #8A6240; /* Raw Umber */
+}
+
+/* Theme-based button styling */
+.button-group button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #4C6444; /* Match the theme's green shade */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 10px;
+}
+
+.button-group button:hover {
+    background-color: #4D2D18; /* Darker shade on hover */
+    transform: scale(1.05);
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

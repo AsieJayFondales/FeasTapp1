@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #CABA9C;
+    color: #4D2D18;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Main container for layout */
+  .main-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  /* Sidebar */
+  .settings-container {
+    background-color: #102820;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    padding: 20px;
+    height: 100vh;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+    color: #CABA9C;
+    border-radius: 0 20px 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  /* Content area aligned beside sidebar */
+  .content-container {
+    margin-left: 270px;
+    padding: 20px;
+    width: calc(100% - 270px);
+    background-color: #F5F3EF;
+    transition: margin-left 0.3s ease;
+  }
+  
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .back-icon {
+    cursor: pointer;
+    width: 30px;
+    margin-right: auto;
+  }
+  
+  .profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: auto;
+  }
+  
+  /* Settings Title */
+  .settings-title {
+    color: #CABA9C;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  /* Menu items */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #CABA9C;
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+  
+  .menu-item:hover {
+    background-color: rgba(76, 100, 68, 0.3);
+    color: #8A6240;
+  }
+  
+  .logout-section {
+    display: flex;
+    align-items: center;
+    color: #CABA9C;
+    font-size: 18px;
+    margin-top: auto;
+    cursor: pointer;
+  }
+  
+  .logout-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+  
+  /* Food Preferences Section */
+  .section-content {
+    background-color: #CABA9C;
+    box-shadow: 0px 5px 14px rgba(20, 20, 43, 0.1);
+    color: #102820;
+    padding: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  /* Allergies and Dietary Preferences Sections */
+  .allergies-section, .preferences-section {
+    padding: 15px;
+    max-width: 1040px;
+    color: #102820;
+    font-weight: 700;
+    border: 1px solid #000;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .allergy-tags-container, .dietary-tags-wrapper {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    color: #000;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .allergy-tag, .dietary-tag {
+    border-radius: 14px;
+    background-color: rgba(217, 217, 217, 0.03);
+    border: 1px solid #4D2D18;
+    padding: 8px 20px;
+    text-align: center;
+    font-weight: 400;
+  }
+  
+  .action-button, .save-button {
+    border-radius: 14px;
+    background-color: #CABA9C;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: #102820;
+    padding: 15px;
+    border: 1px solid #000;
+    cursor: pointer;
+    width: 150px;
+    margin-top: 10px;
+  }
+  
+  .save-button {
+    background-color: #4C6444;
+    color: #FFF;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 991px) {
+    .settings-container, .content-container {
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      position: relative;
+    }
+  
+    .content-container {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
+  

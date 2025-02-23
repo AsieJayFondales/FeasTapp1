@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="settings-container" id="sidebar">
+    <div class="header-wrapper">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5092155499e7a8b6982597d49be08c8342a39616160123467cb8db6b26779ac1?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" 
+           alt="Back" class="back-icon" onclick="window.history.back();" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fcdce4e5ad54d67f795efd0c1dd26f955b7da7b59ba9a6a91e9d06bd1eef28a4?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="Profile" class="profile-icon" />
+    </div>
+    <h1 class="settings-title">Settings</h1>
+    <a href="{{ url_for('account_settings') }}" class="menu-item">Account Settings</a>
+    <a href="{{ url_for('food_preferences') }}" class="menu-item">Food Preferences</a>
+    <a href="{{ url_for('about') }}" class="menu-item">About</a>
+    <a href="{{ url_for('feedback') }}" class="menu-item">Feedback</a>
+    <a href="{{ url_for('signout') }}" class="logout-section">
+      <span>Logout</span>
+    </a>
+</nav>
+
+<!-- Main content -->
+<div class="content-container">
+    <section id="about" class="about-header">About</section>
+    <div class="content-wrapper">
+        <article class="intro-card">
+            <img class="app-logo" src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9172127281b1eabf818050ecee7189a18c4d53e62bdabc4020db99130a61547?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="FeasTapp application logo" />
+            <p class="app-description">
+              Meet <span class="app-name">FeasTapp</span>!
+              <br />
+              FeasTapp is your AI-powered kitchen buddy, ready to turn your ingredients into delicious ideas! Just scan what's in your kitchen, and FeasTapp's smart tech—featuring YOLO, Mask R-CNN, and the Gemini model—whips up personalized recipes from a world of flavors.
+              <br /><br />
+              From quick meals to global cuisine, your next culinary adventure is just a scan away. Let FeasTapp add some fun, flavor, and ease to your cooking!
+            </p>
+        </article>
+        <section class="team">
+            <h2 class="team-heading">Meet the Team</h2>
+            <img class="team-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3848368b80e57c74f372ae1f84ea7ebba22871ec81517adc55ec63819a430556?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="FeasTapp team members" />
+        </section>
+    </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>

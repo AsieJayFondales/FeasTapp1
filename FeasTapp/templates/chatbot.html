@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            font-style: italic;
+            color: #888;
+        }
+        .flash-message {
+            margin: 15px;
+            padding: 10px;
+            border: 1px solid;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .flash-message.success { color: green; border-color: green; }
+        .flash-message.error { color: red; border-color: red; }
+        
+        /* Styling for utility buttons */
+        .utility-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .utility-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='img/green.png') }}" alt="Profile Picture" class="profile-picture">
+                <span class="profile-name">FeasTapp</span>
+            </div>
+            <div class="menu">
+                <a href="{{ url_for('main') }}" class="{% if request.endpoint == 'main' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Scan</a>
+                <a href="{{ url_for('saved_recipes') }}" class="{% if request.endpoint == 'saved_recipes' %}active{% endif %}">Saved Recipe</a>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;">
+                <div class="hamburger-menu">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="settings-icon">
+                    <i class="fa fa-cog"></i>
+                    <div class="settings-menu">
+                        <ul>
+                            <li><a href="{{ url_for('account_settings') }}">Profile Settings</a></li>
+                            <li><a href="{{ url_for('food_preferences') }}">Food Preferences</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="{{ url_for('feedback') }}">Feeback</a></li>
+                            <li><a href="{{ url_for('signin') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </nav>
+    
+    <div class="chat-container">
+        <div class="chat-area">
+            <img src="{{ url_for('static', filename='img/green.png') }}" class="chat-logo">
+            <p class="welcome-message"><b>What's in your kitchen? Let's find a recipe!</b></p>
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Chatbox and Loading Indicator -->
+            <div class="chat-messages" id="chat-box"></div>
+            <div class="loading" id="loading">Processing...</div>
+
+            <!-- "Get Started" Button -->
+            <button id="get-started-btn">Let's get started</button>
+            
+            <!-- Message Input for Chatbot -->
+            <div class="message-box" id="chat-input-area" style="display: none;">
+                <input type="text" id="user-input" placeholder="Type your message here..." class="styled-input">
+                <button id="send-btn" class="send-button">Send</button>
+            </div>
+
+            <!-- Utility Buttons -->
+            <div class="utility-buttons" id="utility-buttons" style="display: none;">
+                <button class="utility-button" id="save-recipe-btn">Save Recipe</button>
+                <button class="utility-button" id="scan-again-btn">Scan Again</button>
+                <button class="utility-button" id="talk-to-feastbot-btn">Change Cuisine</button>
+            </div>
+
+            <!-- Cuisine and Dish Options -->
+            <div id="button-options" class="button-options" style="display: grid;"></div>
+            <button id="recommend-another-dish" class="utility-button" style="display: none;">Recommend Another Dish</button>
+        
+        </div>
+
+        <!-- Modal for Save Recipe Feedback -->
+    <div id="saveRecipeModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close-btn">&times;</span>
+            <img src="{{ url_for('static', filename='img/success.jpg') }}" alt="Success Icon"> <!-- Add a custom icon image -->
+            <p id="modalMessage">Recipe successfully saved!</p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.querySelector('.hamburger-menu').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.querySelector('.menu').classList.toggle('show');
+        })
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>

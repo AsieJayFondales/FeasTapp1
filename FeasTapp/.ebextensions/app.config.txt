@@ -1,0 +1,6 @@
+files:
+"/etc/httpd/conf.d/wsgi_custom.conf"
+	mode: "00644"
+	owner: root
+	group: root
+	content: WSGIApplicationGroup %{GLOBAL}

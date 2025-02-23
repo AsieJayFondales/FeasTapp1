@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Preferences</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/food_preferences.css') }}">
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="settings-container" id="sidebar">
+    <div class="header-wrapper">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5092155499e7a8b6982597d49be08c8342a39616160123467cb8db6b26779ac1?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" 
+             alt="Back" class="back-icon" onclick="goBack()" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fcdce4e5ad54d67f795efd0c1dd26f955b7da7b59ba9a6a91e9d06bd1eef28a4?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="Profile" class="profile-icon" />
+    </div>
+    <h1 class="settings-title">Settings</h1>
+    <a href="{{ url_for('account_settings') }}" class="menu-item">Account Settings</a>
+    <a href="{{ url_for('food_preferences') }}" class="menu-item">Food Preferences</a>
+    <a href="{{ url_for('about') }}" class="menu-item">About</a>
+    <a href="{{ url_for('feedback') }}" class="menu-item">Feedback</a>
+    <a href="{{ url_for('signout') }}" class="logout-section">
+      <span>Logout</span>
+    </a>
+</nav>
+
+<!-- Main content -->
+<div class="content-container">
+    <!-- Food Preferences Section -->
+    <section id="food-preferences" class="section-content">Food Preferences</section>
+
+    <section class="allergies-section">
+        <h2 class="section-title">Ingredients Allergies or Intolerance</h2>
+        <div class="allergy-tags-container">
+            <button class="allergy-tag" tabindex="0">Gluten</button>
+            <button class="allergy-tag" tabindex="0">Seafood</button>
+            <button class="allergy-tag" tabindex="0">Others</button>
+        </div>
+        <button class="action-button" tabindex="0">Add</button> 
+        <button class="save-button" tabindex="0">Save</button>
+    </section>
+
+    <section class="preferences-section">
+        <h2 class="section-title">Dietary Preferences</h2>
+        <div class="dietary-tags-wrapper">
+            <button class="dietary-tag" tabindex="0">Gluten-Free</button>
+            <button class="dietary-tag" tabindex="0">Vegan</button>
+            <button class="dietary-tag" tabindex="0">Others</button>
+        </div>
+        <button class="action-button" tabindex="0">Add</button> 
+        <button class="save-button" tabindex="0">Save</button>
+    </section>
+</div>
+
+<script>
+  function goBack() {
+      if (window.history.length > 1) {
+          window.history.back();
+      } else {
+          window.location.href = "{{ url_for('home') }}";
+      }
+  }
+
+  function logout() {
+      window.location.href = "{{ url_for('signout') }}";
+  }
+</script>
+
+</body>
+</html>

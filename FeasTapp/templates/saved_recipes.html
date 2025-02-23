@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeasTapp - Saved Recipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/saved_recipes.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='img/green.png') }}" alt="Profile Picture" class="profile-picture">
+                <span class="profile-name">FeasTapp</span>
+            </div>
+            <div class="menu">
+                <a href="{{ url_for('main') }}" class="{% if request.endpoint == 'main' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Scan</a>
+                <a href="{{ url_for('saved_recipes') }}" class="{% if request.endpoint == 'saved_recipes' %}active{% endif %}">Saved Recipes</a>
+            </div>
+            <div class="settings-icon">
+                <i class="fa fa-cog"></i>
+                <div class="settings-menu">
+                    <ul>
+                        <li><a href="{{ url_for('account_settings') }}">Profile Settings</a></li>
+                        <li><a href="{{ url_for('food_preferences') }}">Food Preferences</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('feedback') }}">Feeback</a></li>
+                        <li><a href="{{ url_for('signin') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container for Saved Recipes -->
+    <div class="container">
+        <h1>Your Saved Recipes</h1>
+
+        {% if recipes %}
+            <ul class="recipe-list">
+                {% for recipe in recipes %}
+                    <li class="recipe-item" id="recipe-{{ recipe.id }}">
+                        <h2>{{ recipe.name }}</h2>
+                        <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+                        <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                        <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+                        <p><strong>Saved on:</strong> {{ recipe.saved_at }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recipes saved yet!</p>
+        {% endif %}
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/saved_recipes.js') }}"></script>
+</body>
+</html>

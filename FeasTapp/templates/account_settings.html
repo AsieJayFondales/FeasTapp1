@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/account_settings.css') }}">
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="settings-container" id="sidebar">
+    <div class="header-wrapper">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5092155499e7a8b6982597d49be08c8342a39616160123467cb8db6b26779ac1?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" 
+           alt="Back" class="back-icon" onclick="window.history.back();" />
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/fcdce4e5ad54d67f795efd0c1dd26f955b7da7b59ba9a6a91e9d06bd1eef28a4?placeholderIfAbsent=true&apiKey=bd3e599a8c8f4f7f9d9c4e7623290c32" alt="Profile" class="profile-icon" />
+    </div>
+    <h1 class="settings-title">Settings</h1>
+    <a href="{{ url_for('account_settings') }}" class="menu-item">Account Settings</a>
+    <a href="{{ url_for('food_preferences') }}" class="menu-item">Food Preferences</a>
+    <a href="{{ url_for('about') }}" class="menu-item">About</a>
+    <a href="{{ url_for('feedback') }}" class="menu-item">Feedback</a>
+    <a href="{{ url_for('signout') }}" class="logout-section">
+      <span>Logout</span>
+    </a>
+</nav>
+
+<!-- Main content area -->
+<div class="content-container">
+    <section id="account-settings" class="section-content">Account Settings</section>
+
+    <section class="account-details-section">
+        <h2>Photos</h2>
+        <div class="form-group">
+            <img src="https://via.placeholder.com/100" alt="Profile Photo" class="profile-photo">
+            <button class="button-primary">Upload New</button>
+            <button class="button-caution">Remove Picture</button>
+        </div>
+
+        <!-- Row for First Name and Last Name -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" id="firstName" placeholder="First Name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" id="lastName" placeholder="Last Name" class="form-control">
+            </div>
+        </div>
+
+        <!-- Row for Username and Password -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" placeholder="Username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Password" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <!-- Single field for Email -->
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" placeholder="Email" class="form-control">
+        </div>
+
+        <div class="button-group">
+            <button class="button-primary">Update Profile</button>
+            <button class="button-danger">Delete Account</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeasTapp - Scan Ingredients</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='img/green.png') }}" alt="Profile Picture" class="profile-picture">
+                <span class="profile-name">FeasTapp</span>
+            </div>
+            <div class="menu">
+                <a href="{{ url_for('main') }}" class="{% if request.endpoint == 'main' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Scan</a>
+                <a href="{{ url_for('saved_recipes') }}" class="{% if request.endpoint == 'saved_recipes' %}active{% endif %}">Saved Recipes</a>
+            </div>
+            <div class="settings-icon">
+                <i class="fa fa-cog"></i>
+                <div class="settings-menu">
+                    <ul>
+                        <li><a href="{{ url_for('account_settings') }}">Profile Settings</a></li>
+                        <li><a href="{{ url_for('food_preferences') }}">Food Preferences</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('feedback') }}">Feeback</a></li>
+                        <li><a href="{{ url_for('signin') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="main-container">
+        <!-- Scan Section Only -->
+        <div class="scan-container">
+            <div class="scan-box">
+                <img src="{{ url_for('static', filename='img/green.png') }}" alt="Green Image" class="scan-icon">
+                <h1>Scan Ingredients</h1>
+                <p>All your photos will automatically be saved to the database.</p>
+                <div class="button-group">
+                    <button id="camera-btn">Access Camera</button>
+                    <button id="upload-btn">Upload Photo</button>
+                </div>
+                <input type="file" id="uploadInput" accept="image/*" hidden>
+                <p id="scan-status" style="display: none;">Processing the photo...</p>
+                <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+
+                <!-- Container for video and shutter button -->
+                <div class="video-container" hidden>
+                    <button id="close-camera-btn">&times;</button>
+                    <video id="video" width="640" height="480" autoplay></video>
+                    <div id="shutter-button" class="shutter-button"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Modal for Ingredients and Buttons -->
+        <div id="ingredient-popup" class="modal" style="display: none;">
+            <div class="modal-content">
+                <button id="close-ingredient-popup-btn" class="close-btn">&times;</button>
+                <h2>Ingredients List</h2>
+                <div id="ingredient-list">
+                    <h3>Main Ingredient/s</h3>
+                    <ul id="main-ingredients"></ul>
+                    <h3>Condiment/s</h3>
+                    <ul id="condiments"></ul>
+                </div>
+                <div class="button-group">
+                    <button id="edit-ingredients-btn">Edit Ingredients</button>
+                    <button id="choose-cuisine-btn">Choose Cuisine</button>
+                </div>
+                <div id="edit-ingredient-box" style="display: none;">
+                    <textarea id="edit-main-ingredients" placeholder="Edit Main Ingredients"></textarea>
+                    <textarea id="edit-condiments" placeholder="Edit Condiments"></textarea>
+                    <button id="save-ingredients-btn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Modal for Cuisine and Dish Selection -->
+        <div id="cuisine-dish-popup" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Select a Cuisine</h2>
+                <div id="cuisine-list"></div>
+                <h2 id="dish-header" style="display: none;">Recommended Dishes</h2>
+                <div id="dish-list"></div>
+                <button id="close-cuisine-dish-popup-btn">&times; Close</button>
+            </div>
+        </div>
+
+        <!-- Dish Details Modal -->
+        <div id="dish-details-popup" class="modal" style="display: none;">
+            <div class="modal-content" id="dish-details-modal">
+                <div class="button-group">
+                    <button id="save-recipe-btn">Save Recipe</button>
+                    <button id="scan-another-btn">Scan Another Image</button>
+                </div>
+            </div>
+            <button id="close-dish-details-btn">&times; Close</button>
+        </div>
+    </div>
+
+    <!-- Modal for ingredient check message -->
+    <div id="ingredient-check-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-ingredient-check" class="close">&times;</span>
+            <p>Please ensure at least 1 main ingredient and 2 condiments are detected before selecting a cuisine.</p>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

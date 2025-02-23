@@ -1,0 +1,439 @@
+/* Reset Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #CABA9C; /* Khaki background */
+    margin: 0;
+    padding: 0;
+}
+
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #102820; /* Dark Green */
+    padding: 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-name {
+    font-size: 12px;
+    color: #CABA9C;
+    font-weight: bold;
+}
+
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #CABA9C; /* Khaki text */
+    font-weight: bold;
+    font-size: 12px;
+    position: relative;
+    padding: 5px 0;
+}
+
+.menu a.active {
+    color: #8A6240; /* Raw Umber for active link */
+    font-weight: bold;
+}
+
+/* Animated underline on hover and active */
+.menu a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #8A6240; /* Raw Umber for hover underline */
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu a:hover::after,
+.menu a.active::after {
+    width: 100%;
+}
+
+.settings-icon {
+    font-size: 20px;
+    color: #CABA9C;
+    cursor: pointer;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #102820;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    width: 200px;
+    z-index: 20;
+}
+
+.settings-menu.show {
+    display: block;
+}
+
+.settings-menu ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.settings-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #4C6444;
+}
+
+.settings-menu li a {
+    text-decoration: none;
+    color: #CABA9C;
+}
+
+/* Show settings menu on hover */
+.settings-icon:hover .settings-menu {
+    display: block;
+}
+
+/* Main container for centering */
+.main-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Flex container for side-by-side layout */
+.content-container {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.scan-container, .chat-container {
+    background-color: #102820;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    height: 640px; /* Match the height with the chatbot container */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.scan-box {
+    text-align: center;
+    padding: 20px;
+}
+
+.scan-box img {
+    width: 100px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.scan-box h1, .welcome-message {
+    color: #CABA9C;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.scan-box p{
+    color: #CABA9C;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#scan-status-spinner {
+    display: none; /* Initially hidden */
+    width: 50px;
+    height: 50px;
+    margin: 10px auto;
+    background: none;
+}
+
+/* Close button in modal */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #4D2D18; /* Café Noir */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #8A6240; /* Raw Umber */
+}
+
+/* Slideshow Section */
+.slideshow-container {
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.slide {
+    display: none;
+}
+
+.slide img {
+    width: 100%;
+    filter: grayscale(20%) contrast(1.2);
+}
+
+.fade {
+    animation: fadeEffect 2s ease;
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+/* Favorites Section */
+#wefav {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #F5F5F5;
+}
+
+#wefav h1 {
+    font-size: 28px;
+    color: #4D2D18; /* Café Noir */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.favorites-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.favorites-container img {
+    width: 100px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.favorites-container img:hover {
+    transform: scale(1.05);
+}
+
+.scan-ing {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #4C6444; /* Hunter Green */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none; /* Remove underline for links */
+    text-align: center;
+}
+
+.scan-ing:hover {
+    background-color: #8A6240; /* Raw Umber */
+}
+
+/* About Sections */
+.about-section, .team-section {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #F5F5F5;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.about-section h2, .team-section h2 {
+    font-size: 26px;
+    color: #4D2D18; /* Café Noir */
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.about-section p, .team-section p {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: auto;
+}
+
+/* Dish Gallery */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 50px 20px;
+    background-color: #F9F9F9;
+}
+
+.dish-card {
+    text-align: center;
+    padding: 15px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dish-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dish-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.dish-card h3 {
+    font-size: 20px;
+    color: #102820; /* Dark Green */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.dish-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Settings Menu */
+.settings-icon {
+    font-size: 24px;
+    color: #CABA9C;
+    cursor: pointer;
+    position: relative;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #102820;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 220px;
+    z-index: 1000;
+}
+
+.settings-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-menu li {
+    padding: 15px;
+    border-bottom: 1px solid #4C6444;
+}
+
+.settings-menu li a {
+    color: #CABA9C;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.settings-icon:hover .settings-menu {
+    display: block;
+}
+
+/* Button Styles */
+button {
+    font-family: 'Times New Roman', serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8A6240; /* Raw Umber */
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #4D2D18; /* Café Noir */
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    background-color: #102820;
+    color: #CABA9C;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #8A6240;
+    text-decoration: none;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color: #CABA9C;
+}

@@ -1,0 +1,231 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #CABA9C; /* Khaki background */
+  color: #4D2D18; /* Rich dark brown */
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main container for sidebar and content */
+.main-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Sidebar styling */
+.settings-container {
+  background-color: #102820; /* Dark green */
+  color: #CABA9C; /* Light khaki text */
+  width: 250px;
+  padding: 20px;
+  height: 100vh;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 0 20px 20px 0;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-icon {
+  cursor: pointer;
+  width: 30px;
+  margin-right: auto;
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+.settings-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #CABA9C;
+  padding: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.menu-item:hover {
+  background-color: rgba(76, 100, 68, 0.3);
+  color: #8A6240;
+}
+
+/* Make Logout stay at the bottom */
+.logout-section {
+  display: flex;
+  align-items: center;
+  color: #caba9c;
+  font: 500 18px Poppins, sans-serif;
+  margin-top: auto; /* Pushes logout to the bottom */
+  cursor: pointer;
+}
+
+.logout-icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+/* Content area */
+.content-container {
+  margin-left: 270px; /* Space for sidebar */
+  padding: 20px;
+  width: calc(100% - 270px); /* Remaining space for content */
+  background-color: #F5F3EF; /* Elegant light background */
+  transition: margin-left 0.3s ease;
+}
+
+/* Section title */
+.section-content {
+  background-color: #CABA9C;
+  box-shadow: 0px 5px 14px rgba(20, 20, 43, 0.1);
+  color: #102820;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Account details section styling */
+.account-details-section {
+  background-color: #F5F3EF;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 14px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Form labels and input styling */
+.form-label {
+  color: #4D2D18;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  background-color: #FFF;
+  border: 1px solid #8A6240;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+  color: #4D2D18;
+}
+
+/* Password visibility toggle */
+.password-wrapper {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+/* Profile photo */
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+.button-primary, .button-caution, .button-danger {
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-primary {
+  background-color: #CABA9C;
+  color: #102820;
+  border: 1px solid #8A6240;
+}
+
+.button-primary:hover {
+  background-color: #8A6240;
+  color: #FFF;
+}
+
+.button-caution {
+  background-color: #4C6444;
+  color: #FFF;
+  border: 1px solid #4D2D18;
+}
+
+.button-caution:hover {
+  background-color: #8A6240;
+}
+
+.button-danger {
+  background-color: #A93335;
+  color: #FFF;
+  border: 1px solid #8A6240;
+}
+
+.button-danger:hover {
+  background-color: #8A6240;
+  color: #FFF;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .settings-container {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-radius: 0;
+  }
+
+  .content-container {
+      margin-left: 0;
+      width: 100%;
+      padding: 20px;
+  }
+}
